@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stack operations visualizer</title>
+    <link href="stack.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-light bg-light">
+        <h1>Stack Operations Visualizer</h1>
+    </nav>
+    <select id="operationSelect" onchange="selectOperation()">
+        <option value="infixToPostfix">Infix to Postfix</option>
+        <option value="postfixToInfix">Postfix to Infix</option>
+        <option value="infixToPrefix">Infix to Prefix</option>
+        <option value="prefixToInfix">Prefix to Infix</option>
+        <option value="postfixToPrefix">Postfix to Prefix</option>
+        <option value="prefixToPostfix">Prefix to Postfix</option>
+    </select>
+    <div class="inputdata">
+
+        <!-- Taking infix expression as input -->
+        <span style="font-size: 1.4vw; font-size: 2.2vw; color: white;" class="span1">
+            enter valid expression
+        </span>
+        
+        <br>
+        <input type="text" id="infixvalue" class="input1">
+        <br>
+
+        <!-- InfixtoPostfix() function call-->
+        <button onclick="performOperation()" class="btn1">Convert</button>
+    </div>
+    <div class="output">
+        <span id="output" style="color: black;"></span>
+    </div>
+    
+    <div class="visualization">
+        <h2>Operators Stack</h2>
+        <div id="operatorsStack" class="stack"></div>
+    </div>
+
+    <!-- Visualization area for operands -->
+    <div class="visualization">
+        <h2>Result</h2>
+        <div id="operandsResult" class="result"></div>
+    </div>
+
+    <script src="stack.js"></script>
+</body>
+</html>

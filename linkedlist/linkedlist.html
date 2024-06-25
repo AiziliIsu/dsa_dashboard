@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" type="text/css" href="linkedlist.css">
+<title>Linked List Visualization</title>
+
+</head>
+<body>
+  <h1 id="heading">Linked List Visualization</h1>
+  <div class="linked-list" id="linked-list"></div>
+  <div class="controls">
+    <div class="add-controls">
+      <input type="text" id="dataInput" placeholder="Data">
+      <button onclick="addFirst()">Add First</button>
+      <button onclick="addLast()">Add Last</button>
+      <button onclick="addAt()">Add At</button>
+      <button onclick="search()">Search</button>
+    </div>
+    <div class="remove-controls">
+      <input type="number" id="indexInput" placeholder="Index">
+      <button onclick="removeFirst()">Remove First</button>
+      <button onclick="removeLast()">Remove Last</button>
+      <button onclick="removeAt()">Remove At</button>
+    </div>
+  </div>
+
+  <script>
+
+class Node {
+  constructor(data) {
+    this.data = data;
+    this.address = Math.floor(10000 + Math.random() * 90000); // Generating a random 5-digit number for address
+    this.next = null;
+  }
+}
+
+class LinkedList {
+  constructor() {
+    this.head = null;
+  }
+
+  insertAtBeginning(newData) {
+    let newNode = new Node(newData);
+    newNode.next = this.head;
+    this.head = newNode;
+    this.render();
+  }
+
+  insertAtEnd(newData) {
+    let newNode = new Node(newData);
+    if (this.head === null) {
+      this.head = newNode;
+      return;
+    }
+    let last = this.head;
+    while (last.next) {
+      last = last.next;
+    }
+    last.next = newNode;
+    this.render();
+  }
+
+  deleteNode(address) {
+    if (this.head === null) {
+      return;
+    }
+    if (this.head.address === address) {
+      this.head = this.head.next;
+      return;
+    }
+    let prev = null;
+    let current = this.head;
+    while (current !== null) {
+      if (current.address === address) {
+        prev.next = current.next;
+        return;
+      }
+      prev = current;
+      current = current.next;
+    }
+  }
+
+  searchAndGetAddress(key) {
+    let current = this.head;
+    while (current !== null) {
+      if (current.data === key) {
+        return current;
+      }
+      current = current.next;
+    }
+    return null;
+  }
+
+  printList() {
+    let data = [];
+    let current = this.head;
+    while (current) {
+      data.push([current.address, current.data, current.next ? current.next.address : 'null']);
+      current = current.next;
+    }
+    console.table(data, ['Address', 'Value', 'Next Address']);
+  }
+
+  render() {
+    const linkedListDiv = document.getElementById('linked-list');
+    linkedListDiv.innerHTML = '';
+    let current = this.head;
+    while (current) {
+      const nodeDiv = document.createElement('div');
+      nodeDiv.classList.add('node');
+      const table = document.createElement('table');
+      const row = document.createElement('tr');
+      const addressCell = document.createElement('td');
+      addressCell.textContent = current === null ? "null" : current.address;
+      row.appendChild(addressCell);
+      const valueCell = document.createElement('td');
+      valueCell.textContent = current === null ? "null" : current.data;
+      row.appendChild(valueCell);
+      const nextCell = document.createElement('td');
+      nextCell.textContent = current === null || current.next === null ? "null" : current.next.address;
+      row.appendChild(nextCell);
+      table.appendChild(row);
+      nodeDiv.appendChild(table);
+      linkedListDiv.appendChild(nodeDiv);
+      if (current.next) {
+        const arrowDiv = document.createElement('div');
+        arrowDiv.classList.add('arrow');
+        linkedListDiv.appendChild(arrowDiv);
+      }
+      current = current.next;
+    }
+  }
+}
+
+const linkedList = new LinkedList();
+
+function addFirst() {
+  const data = document.getElementById('dataInput').value;
+  linkedList.insertAtBeginning(data);
+}
+
+function addLast() {
+  const data = document.getElementById('dataInput').value;
+  linkedList.insertAtEnd(data);
+}
+
+function addAt() {
+  const data = document.getElementById('dataInput').value;
+  const index = parseInt(document.getElementById('indexInput').value);
+  linkedList.insertAtEnd(data, index);
+}
+
+function getLength(node) {
+  let count = 0;
+  while (node !== null) {
+    count++;
+    node = node.next;
+  }
+  return count;
+}
+
+
+
+function removeAt() {
+  const address = parseInt(document.getElementById('indexInput').value);
+  linkedList.deleteNode(address);
+  linkedList.render();
+}
+
+function removeFirst() {
+  if (linkedList.head !== null) {
+    const address = linkedList.head.address;
+    linkedList.deleteNode(address);
+    linkedList.render();
+  }
+}
+
+function removeLast() {
+  if (linkedList.head === null) {
+    return;
+  }
+  if (linkedList.head.next === null) {
+    linkedList.head = null;
+    linkedList.render();
+    return;
+  }
+  let current = linkedList.head;
+  while (current.next.next) {
+    current = current.next;
+  }
+  const address = current.next.address;
+  current.next = null;
+  linkedList.render();
+}
+
+function search() {
+  const data = document.getElementById('dataInput').value;
+  const node = linkedList.searchAndGetAddress(data);
+  if (node !== null) {
+    document.getElementById('indexInput').value = node.address;
+  }
+}
+
+  </script>
+  
+</body>
+</html>

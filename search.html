@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title style="color: white;">Search Algorithm Visualizations</title>
+    <style>
+          body {
+            background-color: #0d2b4c; /* Black blue background */
+            color: white;
+            padding: 20px;
+  }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .visualization {
+            width: 45%;
+            border: 1px solid #ffffff;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+        .bar {
+            width: 20px;
+            height: 20px;
+            margin: 2px;
+            float: left;
+            text-align: center;
+            line-height: 20px;
+        }
+        .compared {
+            background-color: #f00;
+        }
+        .target {
+            background-color: #0f0;
+        }
+        .explanation {
+            font-family: monospace;
+            font-size: 14px;
+            padding: 10px;
+            margin-top: 15px;
+            border: 1px solid #fdf9f9;
+            border-radius: 5px;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+        button {
+            padding: 10px;
+            border: 1px solid #627dd4;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #fff;; /* Blue background color */
+            color: #888585 /* Text color */
+        }
+        button:hover {
+            background-color: #00488b; /* Dark blue background color on hover */
+        }
+
+  .array-item {
+    width: 50px;
+    height: 50px;
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+  }
+  .btn {
+    background-color: #0d2b4c; /* Black blue background */
+    color: white;
+  }
+  h1 {
+            text-align: center;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Searching Algorithms</h1>
+    <div class="container">
+        <div id="linear-search-visualization" class="visualization"></div>
+        <div id="binary-search-visualization" class="visualization"></div>
+    </div>
+    <div class="buttons">
+        <button id="generate-linear-array">Generate New Linear Array</button>
+        <button id="generate-binary-array">Generate New Binary Array</button>
+        <input type="number" id="target-value" placeholder="Enter Target Value">
+        <button id="search-linear">Search (Linear)</button>
+        <button id="search-binary">Search (Binary)</button>
+    </div>
+    <div id="explanation" class="explanation"></div>
+    <script src="search.js"></script>
+</body>
+</html>

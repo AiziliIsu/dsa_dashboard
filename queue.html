@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queue Visualization</title>
+    <style>
+        /* Button and input styles */
+        body {
+            background-color: #0d2b4c; /* Black blue background */
+            color: white;
+            padding: 20px;
+        }
+        input[type="text"],
+        button {
+            padding: 10px;
+            border: 1px solid #627dd4;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #fff; /* Blue background color */
+            color: #888585; /* Text color */
+            width: 200px; /* Adjust width as needed */
+            box-sizing: border-box; /* Include padding in width */
+        }
+        button:hover {
+            background-color: #00488b; /* Dark blue background color on hover */
+        }
+
+        /* Define CSS styles for queue visualization */
+        .queue-item {
+            border: 1px solid #ccc;
+            padding: 5px;
+            margin: 5px;
+            display: inline-block;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            color: black; /* Set color to black */
+        }
+
+        /* Center align heading */
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Queue Visualization</h1>
+    <input type="text" id="queueInput" placeholder="Enter queue items (comma-separated)">
+    <button onclick="initializeQueue()">Initialize Queue</button>
+    <br><br>
+    <button onclick="dequeue()">Dequeue</button>
+    <button onclick="isEmpty()">Check if Empty</button>
+    <input type="text" id="itemInput" placeholder="Enter item for Enqueue">
+    <button onclick="enqueue()">Enqueue</button>
+    <br><br>
+    <button onclick="peek()">Peek</button>
+    <input type="text" id="peekIndex" placeholder="Enter index for Peek">
+    <div id="queueContainer"></div>
+    <div id="output"></div> <!-- Output area for displaying results -->
+
+    <script>
+        let currentQueue = [];
+        let initialQueue = [];
+        let outputArea = document.getElementById('output'); // Reference to the output area
+
+        function visualizeQueue() {
+            // Enhanced visualization for readability
+            let queueContent = currentQueue.map(item => `<div class="queue-item">${item}</div>`).join('');
+            document.getElementById('queueContainer').innerHTML = queueContent;
+        }
+
+        function initializeQueue() {
+            let queueInput = document.getElementById('queueInput').value;
+            if (queueInput.trim()) {
+                initialQueue = queueInput.split(',').map(item => item.trim());
+                resetQueue();
+            } else {
+                outputArea.innerHTML = '<p>Please enter valid queue items.</p>';
+            }
+        }
+
+        function resetQueue() {
+            currentQueue = initialQueue.slice(); // Avoid modifying the initial queue
+            visualizeQueue();
+        }
+
+        function enqueue() {
+            let itemInput = document.getElementById('itemInput').value;
+            if (itemInput.trim()) {
+                currentQueue.push(itemInput.trim());
+                visualizeQueue();
+            } else {
+                outputArea.innerHTML = '<p>Please enter a valid item.</p>';
+            }
+        }
+
+        function dequeue() {
+            if (currentQueue.length > 0) {
+                let dequeuedItem = currentQueue.shift();
+                outputArea.innerHTML = `<p>Dequeued item: ${dequeuedItem}</p>`;
+                visualizeQueue();
+            } else {
+                outputArea.innerHTML = '<p>Queue is empty.</p>';
+            }
+        }
+
+        function isEmpty() {
+            let empty = currentQueue.length === 0;
+            outputArea.innerHTML = `<p>Queue is empty: ${empty}</p>`;
+        }
+
+        function peek() {
+            let peekIndex = parseInt(document.getElementById('peekIndex').value);
+            if (!isNaN(peekIndex) && peekIndex >= 0 && peekIndex < currentQueue.length) {
+                let peekedItem = currentQueue[peekIndex];
+                outputArea.innerHTML = `<p>Item at index ${peekIndex}: ${peekedItem}</p>`;
+            } else {
+                outputArea.innerHTML = '<p>Invalid index or queue is empty.</p>';
+            }
+        }
+    </script>
+</body>
+</html>
